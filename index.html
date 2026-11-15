@@ -656,7 +656,7 @@ function calc(o){
   const acc=30*o.acc/100*fd*ag.a;
   const ill=ag.i? 250*o.ill/100*fd*ILL_R[d]*ag.i : 0;
   const inc=[0,200,350][o.inc]*fi*INC_R[d];
-  const m=acc+ill+inc; return {lo:r10(m*.85),hi:r10(m*1.15),ill:!!ag.i};
+  const m=acc+ill+inc; return {lo:r10(m*.85),hi:r10(m*1.15),illOK:!!ag.i};
 }
 function claimRows(o){
   const med=o.acc/10, kid=o.age==="kid", noIll=o.age==="old"||!o.ill, i1=o.inc>=1, i2=o.inc>=2;
