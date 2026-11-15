@@ -32,3 +32,9 @@
 
 ## 只能由經紀人本人做的事
 手機端：置頂貼文、IG 連結、精選動態、封存舊文、帳密與驗證碼、真人接 LINE 客人。
+
+## 營運看板（每日必做）
+- 看板：https://claude.ai/artifact/XfYQ9MBWsZMSTVcqxdthmo （artifact slug f853c5fd-a353-49f8-83c4-28bd8fa2e8de，只有老闆看得到）
+- 原始檔：/home/claude/office/（index.html、data.json、img/）
+- 每天營運跑完最後一步：更新 data.json（updated、day、focus、kpi 真實數字、每位成員 status/doing/progress、timeline、next），用 publish_files mode patch 只送 data.json 上去。
+- KPI 只填實際查到的數字，查不到寫「—」，不准編。
