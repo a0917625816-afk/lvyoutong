@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>relay</title></head>
+<body><p id="s">傳送中…</p>
+<script>
+(async()=>{
+  const names=(new URLSearchParams(location.search).get('f')||'').split(',').filter(Boolean);
+  const out=[];
+  for(const n of names){
+    const r=await fetch('./'+n+'?'+Date.now(),{cache:'no-store'});
+    out.push({name:n,buf:await r.arrayBuffer()});
+  }
+  if(window.opener){window.opener.postMessage({lytFiles:out},'*');document.getElementById('s').textContent='已傳送 '+out.length+' 張';}
+  else document.getElementById('s').textContent='沒有 opener';
+})();
+</script></body></html>
