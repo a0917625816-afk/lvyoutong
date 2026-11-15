@@ -163,8 +163,8 @@ select:focus,input:focus{border-color:var(--sky);outline:none;background:#fff}
 .result ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:4px;font-size:14.5px;color:#E3ECF8}
 .result li::before{content:"✈ ";color:#FFC983}
 .price{grid-column:1/-1;border-top:1px dashed rgba(255,255,255,.25);padding-top:16px;margin-top:4px}
-.price .ph{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.price .ph b{font-size:16px}.price .ph span{font-size:12.5px;color:#A9BEDF}
+.price .p-hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.price .p-hd b{font-size:16px}.price .p-hd span{font-size:12.5px;color:#A9BEDF}
 .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .tier{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;position:relative}
 .tier.hot{background:#fff;color:var(--navy);border-color:#FFC983;box-shadow:0 10px 26px rgba(0,0,0,.25)}
@@ -626,7 +626,7 @@ function estimate(){
 }
 function renderPrice(r){
   const e=estimate(), hot=e.tiers[1];
-  $("r-price").innerHTML = '<div class="ph"><b>預估保費（每人）</b><span>'+r.destName+'・約 '+e.days+' 天・'+(e.ppl>=5?'5 人以上':e.ppl+' 人')+'</span></div>'
+  $("r-price").innerHTML = '<div class="p-hd"><b>預估保費（每人）</b><span>'+r.destName+'・約 '+e.days+' 天・'+(e.ppl>=5?'5 人以上':e.ppl+' 人')+'</span></div>'
    + '<div class="tiers">' + e.tiers.map(t=>'<div class="tier'+(t.hot?' hot':'')+'">'+(t.hot?'<span class="badge">多數人選</span>':'')+'<div class="tg">'+t.k+'方案</div><div class="amt">NT$'+fmt(t.lo)+'<small> ～ '+fmt(t.hi)+'</small></div><div class="cv">'+t.cv+'</div></div>').join("") + '</div>'
    + '<div class="total">推薦方案 '+(e.ppl>=5?'5 人以上':e.ppl+' 人')+'合計約 <b>NT$'+fmt(hot.lo*e.ppl)+' ～ '+fmt(hot.hi*e.ppl)+'</b></div>'
    + '<div class="cta"><button class="btn btn-line chev" type="button" id="r-line">把這組方案傳到 LINE，真人幫你比價</button></div>'
