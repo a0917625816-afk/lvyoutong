@@ -574,7 +574,7 @@ document.querySelectorAll("img[data-img]").forEach(im => {
   let begun = false, midT, endT, doneT;
   const start = () => {
     if (begun) return; begun = true;
-    requestAnimationFrame(() => w.classList.add("play"));
+    void w.offsetWidth; setTimeout(() => w.classList.add("play"), 30);
     midT = setTimeout(() => w.classList.add("mid"), 3300);
     endT = setTimeout(() => w.classList.add("end"), 4600);
     doneT = setTimeout(done, 6400);
