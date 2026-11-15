@@ -9,7 +9,7 @@
     const r=await fetch('./'+n+'?'+Date.now(),{cache:'no-store'});
     out.push({name:n,buf:await r.arrayBuffer()});
   }
-  if(window.opener){window.opener.postMessage({lytFiles:out},'*');document.getElementById('s').textContent='已傳送 '+out.length+' 張';}
+  const tgt=window.opener||(window.parent!==window?window.parent:null); if(tgt){tgt.postMessage({lytFiles:out},'*');document.getElementById('s').textContent='已傳送 '+out.length+' 張';}
   else document.getElementById('s').textContent='沒有 opener';
 })();
 </script></body></html>
