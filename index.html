@@ -71,22 +71,29 @@ p{margin:0}
 .w-bar.t{top:0}.w-bar.b{bottom:0}
 #welcome.play .w-bar.t{transform:translateY(-100%)}#welcome.play .w-bar.b{transform:translateY(100%)}
 .w-white{position:absolute;inset:0;background:#fff;opacity:0;transition:opacity 1s ease;pointer-events:none;z-index:3}
-#welcome.out .w-white{opacity:.92}
+#welcome.mid .w-white{opacity:.35}
 .w-copy{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;z-index:4;padding:0 20px;text-shadow:0 6px 30px rgba(10,30,70,.45)}
-.w-tag{font-family:var(--f-latin);font-weight:700;font-size:12px;letter-spacing:.42em;opacity:0;transform:translateY(8px);transition:all .8s ease .5s}
+.w-tag{font-family:var(--f-latin);font-weight:700;font-size:12px;letter-spacing:.42em;opacity:0;transform:translateY(8px);transition:all .7s ease .15s}
 .w-word{display:flex;gap:.08em;font-size:clamp(56px,11vw,128px);font-weight:900;letter-spacing:.08em;line-height:1.05;margin:14px 0 10px}
 .w-word span{display:inline-block;opacity:0;filter:blur(14px);transform:translateY(24px) scale(1.06);transition:opacity 1s ease,filter 1.1s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
-.w-line{width:0;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#FFB36B,#fff,#FFB36B,transparent);transition:width 1.2s cubic-bezier(.6,0,.2,1) 1.6s}
-.w-sub{margin-top:14px;font-size:clamp(15px,2.2vw,19px);font-weight:600;letter-spacing:.12em;opacity:0;transform:translateY(10px);transition:all .9s ease 2s}
+.w-line{width:0;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#FFB36B,#fff,#FFB36B,transparent);transition:width 1s cubic-bezier(.6,0,.2,1) .9s}
+.w-sub{margin-top:14px;font-size:clamp(15px,2.2vw,19px);font-weight:600;letter-spacing:.12em;opacity:0;transform:translateY(10px);transition:all .8s ease 1.1s}
 #welcome.play .w-tag,#welcome.play .w-sub{opacity:.95;transform:none}
 #welcome.play .w-word span{opacity:1;filter:blur(0);transform:none}
-#welcome.play .w-word span:nth-child(1){transition-delay:.8s}
-#welcome.play .w-word span:nth-child(2){transition-delay:1s}
-#welcome.play .w-word span:nth-child(3){transition-delay:1.2s}
+#welcome.play .w-word span:nth-child(1){transition-delay:.25s}
+#welcome.play .w-word span:nth-child(2){transition-delay:.42s}
+#welcome.play .w-word span:nth-child(3){transition-delay:.59s}
 #welcome.play .w-line{width:min(280px,60vw)}
-#welcome.out .w-copy{opacity:0;transform:scale(1.06);transition:opacity .8s ease,transform 1s ease}
+#welcome.mid .w-copy{opacity:0;transform:scale(1.08);filter:blur(6px);transition:opacity .7s ease,transform 1s ease,filter .8s ease}
+.w-copy{text-shadow:0 2px 6px rgba(10,30,70,.35),0 10px 40px rgba(10,30,70,.55)}
+.w-end{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--navy);opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .9s ease;pointer-events:none}
+.w-end b{font-size:clamp(44px,8vw,84px);font-weight:900;letter-spacing:.1em;position:relative}
+.w-end b::after{content:"";position:absolute;left:6%;right:-4%;bottom:-6px;height:8px;border-radius:8px;background:var(--sun);transform:skewX(-20deg)}
+.w-end span{margin-top:20px;font-size:clamp(14px,2vw,17px);font-weight:700;letter-spacing:.14em;color:#5A6B86}
+#welcome.end .w-white{opacity:1}
+#welcome.end .w-end{opacity:1;transform:none}
 .w-prog{position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,#FFB36B,#fff);z-index:5}
-#welcome.play .w-prog{width:100%;transition:width 5.6s linear}
+#welcome.play .w-prog{width:100%;transition:width 6.4s linear}
 .w-skip{position:absolute;right:18px;top:16px;z-index:6;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(6px);border-radius:999px;color:#fff;font:700 13px var(--f-body);letter-spacing:.12em;padding:8px 16px;cursor:pointer}
 .w-skip:hover{background:rgba(255,255,255,.32)}
 body.w-lock{overflow:hidden}
@@ -329,6 +336,7 @@ footer b{color:#fff}
     <div class="w-sub">出國前幫你看保障・出事後幫你跑理賠</div>
   </div>
   <div class="w-white" aria-hidden="true"></div>
+  <div class="w-end" aria-hidden="true"><b>旅遊通</b><span>一個 LINE，旅程更安心</span></div>
   <div class="w-prog" aria-hidden="true"></div>
   <button class="w-skip" type="button" id="w-skip">略過 ›</button>
 </div>
@@ -558,21 +566,26 @@ document.querySelectorAll("img[data-img]").forEach(im => {
   let ended = false;
   const done = () => {
     if (ended) return; ended = true;
-    w.classList.add("out");
-    setTimeout(() => { w.classList.add("gone"); document.body.classList.remove("w-lock"); document.querySelector("main,.hero,header")?.classList.add("page-in"); }, 500);
+    w.classList.add("end");
+    setTimeout(() => { w.classList.add("gone"); document.body.classList.remove("w-lock"); document.querySelector(".hero,header")?.classList.add("page-in"); }, 250);
     try { sessionStorage.setItem("lyt-w","1"); } catch(e){}
-    setTimeout(() => w.remove(), 1500);
+    setTimeout(() => w.remove(), 1400);
   };
-  let begun = false;
+  let begun = false, midT, endT, doneT;
   const start = () => {
     if (begun) return; begun = true;
     requestAnimationFrame(() => w.classList.add("play"));
-    setTimeout(() => w.classList.add("out"), 4700);
-    setTimeout(done, 5600);
+    midT = setTimeout(() => w.classList.add("mid"), 3300);
+    endT = setTimeout(() => w.classList.add("end"), 4600);
+    doneT = setTimeout(done, 6400);
   };
+  v.addEventListener("timeupdate", () => {
+    if (v.currentTime > 3.3) w.classList.add("mid");
+    if (v.currentTime > 4.6) w.classList.add("end");
+  });
   v.addEventListener("playing", start, {once:true});
   const p = v.play(); if (p && p.catch) p.catch(start);
-  setTimeout(start, 2200);
+  setTimeout(start, 1500);
   $("w-skip").addEventListener("click", done);
 })();
 
