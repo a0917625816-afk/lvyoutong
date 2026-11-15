@@ -178,6 +178,32 @@ select:focus,input:focus{border-color:var(--sky);outline:none;background:#fff}
 .price .cta .btn-line{background:#06C755;color:#fff}
 .price .fine{font-size:11.5px;color:#9FB3D3;margin-top:8px;line-height:1.5}
 @media (max-width:720px){.tiers{grid-template-columns:1fr}.tier .amt{font-size:22px}}
+.tier{cursor:pointer;transition:transform .15s,box-shadow .15s}.tier:hover{transform:translateY(-2px)}
+.tier.sel{outline:2px solid #FFC983;outline-offset:2px}
+.calc{margin-top:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:14px}
+.calc h4{font-size:15px;margin-bottom:10px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.calc h4 span{font-size:12px;font-weight:500;color:#A9BEDF}
+.c-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.c-grid label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700;color:#C9D7EC}
+.c-grid select,.c-grid input{font:inherit;font-size:14px;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:#fff;color:var(--navy);width:100%}
+.c-out{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,.2)}
+.c-out .big{font-family:var(--f-latin);font-weight:800;font-size:30px;color:#FFC983;line-height:1.1}
+.c-out .big small{font-size:13px;color:#C9D7EC;font-family:inherit;font-weight:600}
+.c-out .sum{font-size:14px;color:#E3ECF8;text-align:right}
+.c-out .sum b{font-size:18px;color:#fff}
+.claims{margin-top:14px}
+.claims h4{font-size:15px;margin-bottom:8px}
+.cl-row{display:grid;grid-template-columns:1.1fr 1.2fr 1.6fr;gap:10px;padding:9px 2px;border-bottom:1px solid rgba(255,255,255,.1);font-size:13.5px;align-items:start}
+.cl-row.hd{font-size:12px;color:#9FB3D3;font-weight:700;border-bottom-color:rgba(255,255,255,.22)}
+.cl-row .it{font-weight:700;color:#fff}.cl-row .it i{font-style:normal;margin-right:6px}
+.cl-row .am{color:#FFC983;font-weight:700}
+.cl-row .wh{color:#C9D7EC}
+.cl-row.off{opacity:.38}.cl-row.off .am{color:#9FB3D3;font-weight:500}
+.docs{margin-top:12px;background:rgba(255,255,255,.06);border-radius:12px;padding:10px 14px;font-size:13px;color:#DCE6F4}
+.docs summary{cursor:pointer;font-weight:700;color:#fff}
+.docs ul{margin:8px 0 2px 18px}.docs li{margin:3px 0}
+@media (max-width:860px){.c-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:720px){.cl-row{grid-template-columns:1fr 1fr}.cl-row .wh{grid-column:1/-1;font-size:12.5px;margin-top:-4px}.cl-row.hd .wh{display:none}}
 .pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
 @keyframes pop{0%{transform:scale(.97);opacity:.5}100%{transform:none;opacity:1}}
 
@@ -615,24 +641,67 @@ function recommend(){
   if (days==="xl") notes.push("15 天以上的長行程，先確認保期上限。");
   return {type,name,why,notes:notes.slice(0,3),code:DEST[d][0],destName:DEST[d][1]};
 }
-/* 預估保費：依 2026 年各家網路投保公開試算（日本 5 天：基本約 450、1000 萬＋不便險約 950、1500 萬加強約 1,450）推估 */
-const DAYS={s:3,m:5,l:10,xl:20}, REGION={jp:1,kr:1,th:.9,eu:1.2,us:1.32,other:1.1};
-const TIERS=[{k:"基本",base:450,cv:"身故 500 萬｜醫療 50 萬｜基本不便險"},{k:"推薦",base:950,cv:"身故 1,000 萬｜醫療 100 萬｜班機・行李延誤",hot:1},{k:"加強",base:1450,cv:"身故 1,500 萬｜醫療 150 萬｜含法定傳染病"}];
+/* 預估保費（保費試算）：依 2026 年各家產險網路投保公開試算推估，元件加總。
+   基準＝日本 5 天、15–70 歲：意外 100 萬約 30 元、海外突發疾病 100 萬約 250 元、不便險基本約 200／加強約 350 元 */
+const DAYS={s:3,m:5,l:10,xl:20};
+const ILL_R={jp:1,kr:1,th:.9,eu:1.3,us:1.8,other:1.2}, INC_R={jp:1,kr:1,th:1,eu:1.15,us:1.15,other:1.05};
+const AGE={kid:{a:.8,i:.9,t:"未滿 15 歲"},adult:{a:1,i:1,t:"15–70 歲"},senior:{a:1.2,i:1.6,t:"71–80 歲"},old:{a:1.4,i:0,t:"81 歲以上"}};
+const PRESET=[{k:"基本",acc:500,ill:50,inc:1},{k:"推薦",acc:1000,ill:100,inc:2,hot:1},{k:"加強",acc:1500,ill:200,inc:2}];
+const INC_T=["不加","基本","加強"];
 const r10=n=>Math.round(n/10)*10, fmt=n=>n.toLocaleString("zh-TW");
-function estimate(){
-  const d=$("p-dest").value, days=DAYS[$("p-days").value], ppl=+$("p-ppl").value;
-  const f=Math.pow(days/5,.75)*REGION[d];
-  return {days,ppl,tiers:TIERS.map(t=>{const m=t.base*f; return {...t,lo:r10(m*.85),hi:r10(m*1.15)};})};
+const PS={acc:1000,ill:100,inc:2,tier:1,days:null,age:"adult"};
+function calc(o){
+  const d=$("p-dest").value, days=o.days, ag=AGE[o.age];
+  const fd=Math.pow(days/5,.75), fi=Math.pow(days/5,.5);
+  const acc=30*o.acc/100*fd*ag.a;
+  const ill=ag.i? 250*o.ill/100*fd*ILL_R[d]*ag.i : 0;
+  const inc=[0,200,350][o.inc]*fi*INC_R[d];
+  const m=acc+ill+inc; return {lo:r10(m*.85),hi:r10(m*1.15),ill:!!ag.i};
+}
+function claimRows(o){
+  const med=o.acc/10, kid=o.age==="kid", noIll=o.age==="old"||!o.ill, i1=o.inc>=1, i2=o.inc>=2;
+  const R=[
+   ["🛡️","意外身故・失能", kid?"依法以喪葬費用為限":fmt(o.acc)+" 萬（失能依等級）","在國外發生意外，造成身故或失能",1],
+   ["🩹","意外傷害醫療", "實支實付 "+fmt(med)+" 萬","意外受傷看醫生、住院、手術",1],
+   ["🏥","海外突發疾病", noIll?"未加保":"住院最高 "+fmt(o.ill)+" 萬；門診、急診依條款上限","在國外突然生病住院、看門診或急診",!noIll],
+   ["🚑","緊急救援服務","多數方案免費附贈","海外送醫、轉院、醫療轉送回台",1],
+   ["⏱️","班機延誤", i1?"每滿 4 小時約 NT$1,000～2,000":"未加保","表定班機延誤 4 小時以上（或被取消改搭）",i1],
+   ["🧳","行李延誤", i1?"實支上限約 NT$3,000～5,000":"未加保","抵達 6 小時行李還沒到，買必需品的費用",i1],
+   ["💼","行李損失", i1?"上限約 NT$10,000～20,000":"未加保","託運行李被偷、遺失或毀損",i1],
+   ["🛂","旅行文件遺失", i1?"補辦費用約 NT$3,000～5,000":"未加保","護照、簽證被偷搶或遺失的補辦費",i1],
+   ["❌","旅程取消／縮短", i2?"依實際損失，上限約 NT$50,000～100,000":"加強才有","出發前或途中因生病、家人重病過世等取消或提前回國",i2],
+   ["💳","信用卡盜用", i2?"上限約 NT$3,000～5,000":"加強才有","信用卡被盜刷，掛失前 36 小時內的損失",i2],
+   ["✈️","劫機", i2?"每日約 NT$5,000":"加強才有","搭乘的班機被劫持",i2]];
+  return '<div class="cl-row hd"><span>理賠項目</span><span>大約賠多少</span><span class="wh">什麼時候會賠</span></div>'
+   + R.map(r=>'<div class="cl-row'+(r[4]?'':' off')+'"><span class="it"><i>'+r[0]+'</i>'+r[1]+'</span><span class="am">'+r[2]+'</span><span class="wh">'+r[3]+'</span></div>').join("");
 }
 function renderPrice(r){
-  const e=estimate(), hot=e.tiers[1];
-  $("r-price").innerHTML = '<div class="p-hd"><b>預估保費（每人）</b><span>'+r.destName+'・約 '+e.days+' 天・'+(e.ppl>=5?'5 人以上':e.ppl+' 人')+'</span></div>'
-   + '<div class="tiers">' + e.tiers.map(t=>'<div class="tier'+(t.hot?' hot':'')+'">'+(t.hot?'<span class="badge">多數人選</span>':'')+'<div class="tg">'+t.k+'方案</div><div class="amt">NT$'+fmt(t.lo)+'<small> ～ '+fmt(t.hi)+'</small></div><div class="cv">'+t.cv+'</div></div>').join("") + '</div>'
-   + '<div class="total">推薦方案 '+(e.ppl>=5?'5 人以上':e.ppl+' 人')+'合計約 <b>NT$'+fmt(hot.lo*e.ppl)+' ～ '+fmt(hot.hi*e.ppl)+'</b></div>'
-   + '<div class="cta"><button class="btn btn-line chev" type="button" id="r-line">把這組方案傳到 LINE，真人幫你比價</button></div>'
-   + '<div class="fine">以上依 2026 年各家產險網路投保公開保費推估，僅供參考；實際保費、保障與承保條件以保險公司報價為準。'+($("p-who").value==="elder"?'長輩超過 70 歲保額與保費可能不同。':'')+($("p-who").value==="family"?'15 歲以下孩童身故保額有法定上限，保費通常較低。':'')+'</div>';
+  const ppl=+$("p-ppl").value, pplT=ppl>=5?'5 人以上':ppl+' 人';
+  if(PS.days===null||PS.lastSel!==$("p-days").value){PS.days=DAYS[$("p-days").value];PS.lastSel=$("p-days").value;}
+  if($("p-who").value==="elder"&&PS.age==="adult"&&!PS.ageSet)PS.age="senior";
+  const base={days:PS.days,age:PS.age};
+  const tiers=PRESET.map(t=>({...t,...calc({...base,...t})}));
+  const cur=calc({...base,acc:PS.acc,ill:PS.ill,inc:PS.inc});
+  const sel=v=>v?' selected':'';
+  $("r-price").innerHTML = '<div class="p-hd"><b>預估保費（每人）</b><span>'+r.destName+'・'+PS.days+' 天・'+pplT+'・'+AGE[PS.age].t+'</span></div>'
+   + '<div class="tiers">' + tiers.map((t,i)=>'<div class="tier'+(t.hot?' hot':'')+(PS.tier===i?' sel':'')+'" data-t="'+i+'" role="button" tabindex="0">'+(t.hot?'<span class="badge">多數人選</span>':'')+'<div class="tg">'+t.k+'方案</div><div class="amt">NT$'+fmt(t.lo)+'<small> ～ '+fmt(t.hi)+'</small></div><div class="cv">身故 '+fmt(t.acc)+' 萬｜醫療 '+fmt(t.acc/10)+' 萬｜疾病 '+(AGE[PS.age].i?fmt(t.ill)+' 萬':'不適用')+'｜不便險'+INC_T[t.inc]+'</div></div>').join("") + '</div>'
+   + '<div class="calc"><h4>自己調整，精算保費 <span>點上面的方案會自動帶入</span></h4><div class="c-grid">'
+   + '<label>出國天數<input id="c-days" type="number" min="1" max="180" value="'+PS.days+'"></label>'
+   + '<label>被保險人年齡<select id="c-age">'+Object.entries(AGE).map(([k,v])=>'<option value="'+k+'"'+sel(PS.age===k)+'>'+v.t+'</option>').join("")+'</select></label>'
+   + '<label>意外身故保額<select id="c-acc">'+[200,300,500,800,1000,1200,1500,2000].map(v=>'<option value="'+v+'"'+sel(PS.acc===v)+'>'+fmt(v)+' 萬</option>').join("")+'</select></label>'
+   + '<label>海外突發疾病<select id="c-ill">'+[[0,"不加"],[50,"50 萬"],[100,"100 萬"],[150,"150 萬"],[200,"200 萬"],[300,"300 萬"]].map(v=>'<option value="'+v[0]+'"'+sel(PS.ill===v[0])+'>'+v[1]+'</option>').join("")+'</select></label>'
+   + '<label>旅遊不便險<select id="c-inc">'+INC_T.map((v,i)=>'<option value="'+i+'"'+sel(PS.inc===i)+'>'+v+'</option>').join("")+'</select></label>'
+   + '</div><div class="c-out"><div><div style="font-size:12.5px;color:#C9D7EC">你的方案，每人約</div><div class="big">NT$'+fmt(cur.lo)+'<small> ～ '+fmt(cur.hi)+'</small></div></div><div class="sum">'+pplT+'合計約<br><b>NT$'+fmt(cur.lo*ppl)+' ～ '+fmt(cur.hi*ppl)+'</b></div></div></div>'
+   + '<div class="claims"><h4>這個方案出事可以賠什麼</h4>'+claimRows(PS)+'</div>'
+   + '<details class="docs"><summary>出事了要留什麼證明？（先拍照存起來）</summary><ul><li>看醫生：診斷書＋收據正本（外文可以）</li><li>班機延誤：航空公司延誤證明＋登機證</li><li>行李延誤／遺失：機場行李事故報告（PIR）＋購物收據</li><li>護照、財物被偷：當地警察局報案證明</li><li>不會弄？直接 LINE 我們，幫你跑理賠</li></ul></details>'
+   + '<div class="cta"><button class="btn btn-line chev" type="button" id="r-line">把這組試算傳到 LINE，真人幫你比價</button></div>'
+   + '<div class="fine">保費與理賠額度為 2026 年各家產險網路投保公開資料推估的常見範圍，僅供參考；實際保費、保障內容、理賠條件以保險公司報價與保單條款為準。'+(PS.age==="old"?'81 歲以上多數保險公司不承保海外突發疾病。':'')+(PS.age==="kid"?'未滿 15 歲身故給付依法以喪葬費用為限，保費通常較低。':'')+(PS.age==="senior"?'71 歲以上部分保險公司有保額上限。':'')+'</div>';
+  document.querySelectorAll("#r-price .tier").forEach(el=>{const go=()=>{const t=PRESET[+el.dataset.t];Object.assign(PS,{acc:t.acc,ill:t.ill,inc:t.inc,tier:+el.dataset.t});renderPrice(r);};el.addEventListener("click",go);el.addEventListener("keydown",e=>{if(e.key==="Enter")go();});});
+  const up=()=>{PS.days=Math.max(1,Math.min(180,+$("c-days").value||1));PS.age=$("c-age").value;PS.ageSet=1;PS.acc=+$("c-acc").value;PS.ill=+$("c-ill").value;PS.inc=+$("c-inc").value;PS.tier=PRESET.findIndex(t=>t.acc===PS.acc&&t.ill===PS.ill&&t.inc===PS.inc);renderPrice(r);};
+  ["c-age","c-acc","c-ill","c-inc"].forEach(id=>$(id).addEventListener("change",up));
+  $("c-days").addEventListener("change",up);
   $("r-line").addEventListener("click", ()=>{
-    const msg = "【30秒找方案】\n目的地："+r.destName+"\n天數：約 "+e.days+" 天\n人數："+(e.ppl>=5?"5 人以上":e.ppl+" 人")+"\n同行："+$("p-who").selectedOptions[0].text+"\n看到的預估：推薦方案每人 NT$"+fmt(hot.lo)+"～"+fmt(hot.hi)+"\n想請你幫我比價確認，謝謝！";
+    const msg = "【旅遊通保費試算】\n目的地："+r.destName+"\n天數："+PS.days+" 天\n人數："+pplT+"\n年齡："+AGE[PS.age].t+"\n意外身故："+fmt(PS.acc)+" 萬（醫療 "+fmt(PS.acc/10)+" 萬）\n海外突發疾病："+(PS.ill&&AGE[PS.age].i?fmt(PS.ill)+" 萬":"不加")+"\n不便險："+INC_T[PS.inc]+"\n試算每人約 NT$"+fmt(cur.lo)+"～"+fmt(cur.hi)+"\n想請你幫我比價確認，謝謝！";
     window.open("https://line.me/R/oaMessage/"+CONFIG.LINE_ID+"/?"+encodeURIComponent(msg),"_blank");
   });
 }
