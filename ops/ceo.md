@@ -38,3 +38,8 @@
 - 原始檔：/home/claude/office/（index.html、data.json、img/）
 - 每天營運跑完最後一步：更新 data.json（updated、day、focus、kpi 真實數字、每位成員 status/doing/progress、timeline、next），用 publish_files mode patch 只送 data.json 上去。
 - KPI 只填實際查到的數字，查不到寫「—」，不准編。
+
+## 內容方向更新（2026-11-16 經紀人指示）
+- IG Reels：改做「搞笑共鳴＋最後反轉到旅平險／旅平卡」，腳本庫在 ig/reels_funny.md，爆款觀察在 /root/.claude/instagram/swipe.md。每週至少 2 支搞笑型，其餘照雜誌封面動態。不要一開頭就講保險。
+- Threads：不只純文字，每週 2～3 篇要帶圖或影片（可重用 IG 封面、Reels 影片、手機實拍感照片），其他天發短文。
+- 留言安全：照 lyt-engage.md「避免留言被刪」規則；一週被刪 2 次以上要向經紀人提建議。
