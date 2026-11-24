@@ -27,3 +27,5 @@
 | 2026-11-23 | 脆 互動 | 回 @nospaioe「去日本你花過最冤的一筆錢」（17 分鐘 2.4k 瀏覽，我們是第一則以外的頭排回覆），短、無連結 | 今日陌生人上限 1 則已用 |
 | 2026-11-23 | IG Reels | 貓咪短劇 EP2〈行李轉到最後，只剩我們〉（老闆 OK） | AI 標籤 |
 | 2026-11-24 | IG＋Threads | 雜誌封面 No.11 跨年出國先看這期 https://www.instagram.com/lvyoutong_tw/p/DgIBjwiGLQi/ | 19:00 電腦離線，21:20 重試補發；AI 標籤、同步脆 |
+| 2026-11-24 | IG Reels | vlog EP1〈雪寶虎寶出國玩：白川鄉〉v6（老闆 OK）https://www.instagram.com/lvyoutong_tw/reel/DgIFbGEyLdF/ | AI 標籤 |
+| 2026-11-24 | Threads | 同一支 vlog 影片＋短文（主題：旅遊） | 老闆要求脆也要放 |
