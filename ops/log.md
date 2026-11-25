@@ -29,3 +29,5 @@
 | 2026-11-24 | IG＋Threads | 雜誌封面 No.11 跨年出國先看這期 https://www.instagram.com/lvyoutong_tw/p/DgIBjwiGLQi/ | 19:00 電腦離線，21:20 重試補發；AI 標籤、同步脆 |
 | 2026-11-24 | IG Reels | vlog EP1〈雪寶虎寶出國玩：白川鄉〉v6（老闆 OK）https://www.instagram.com/lvyoutong_tw/reel/DgIFbGEyLdF/ | AI 標籤 |
 | 2026-11-24 | Threads | 同一支 vlog 影片＋短文（主題：旅遊） | 老闆要求脆也要放 |
+| 2026-11-25 | IG＋Threads | 雜誌封面 No.12 自由行租車出事怎麼辦 https://www.instagram.com/lvyoutong_tw/p/DgKYZHOmH4o/ | AI 標籤、同步脆 |
+| 2026-11-25 | 互動 | IG 留言 3 則：yaoa2715312 北海道租車 Dfb6X0GIdQU（雪地取車提醒）、foodie____aii 白川鄉 DcXkbGjPRxV（防滑提醒）、wangwang_naa 東京跨年 DS9vG9hk4RK（初詣）；脆回 1 則 @as0075 北海道雪地自駕問題 | 無連結 |
