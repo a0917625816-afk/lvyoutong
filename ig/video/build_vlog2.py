@@ -49,15 +49,15 @@ def fit(n,src,s0,s1,t0,t1,kind):
     run(['-i',raw,'-af',atempo(d/(t1-t0))+','+(XCH if kind=='x' else HCH),'-ac','2','-ar','48000',out])
     print(n,'src',round(d,2),'target',round(t1-t0,2),'got',round(dur(out),2));return (out,t0)
 dF=D+'/dF2.mp4'
-A=[(fit('a1',D+'/k0.wav',0.0,3.65,0.0,2.29,'x'),[('大家好～今天在京都清水寺！',0.05)]),
-   (fit('a2',D+'/dF4.mp4',0.0,0.91,3.24,4.10,'h'),[('人好多。',3.24)]),
-   (fit('a3',D+'/k1.wav',0.0,3.79,4.86,7.21,'x'),[('你看下面！',4.86),('整個京都都白了！',5.9)]),
-   (fit('a4',D+'/dF4.mp4',2.20,3.67,8.22,9.40,'h'),[('……你不要靠欄杆那麼近。',8.22)]),
-   (fit('a5',D+'/k2.wav',0.0,1.81,10.19,11.95,'x'),[('等一下去吃抹茶冰淇淋！',10.19)])]
-B=[(fit('b1',D+'/k3.wav',0.0,1.94,0.53,2.40,'x'),[('欸……我的錢包呢？',0.53)]),
-   (fit('b2',D+'/dF4.mp4',4.62,5.20,3.19,3.79,'h'),[('又來了。',3.19)]),
-   (fit('b3',D+'/k4.wav',0.0,2.77,4.71,6.61,'x'),[('護照……也在裡面啦……',4.71)]),
-   (fit('b4',D+'/dF4.mp4',6.91,12.84,7.40,12.09,'h'),[('先去派出所拿遺失證明，',7.40),('有保不便險的話，',9.4),('補辦費用可以申請。',10.7)])]
+A=[(fit('a1',D+'/m0.wav',0.0,3.40,0.0,2.29,'x'),[('大家好～今天在京都清水寺！',0.05)]),
+   (fit('a2',D+'/t0.wav',0.28,1.87,3.24,4.10,'h'),[('人好多。',3.24)]),
+   (fit('a3',D+'/m1.wav',0.0,2.77,4.86,7.21,'x'),[('你看下面！',4.86),('整個京都都白了！',5.9)]),
+   (fit('a4',D+'/t1.wav',0.0,1.16,8.22,9.40,'h'),[('……你不要靠欄杆那麼近。',8.22)]),
+   (fit('a5',D+'/m2.wav',0.0,2.14,10.19,11.95,'x'),[('等一下去吃抹茶冰淇淋！',10.19)])]
+B=[(fit('b1',D+'/m3.wav',0.0,1.65,0.53,2.40,'x'),[('欸……我的錢包呢？',0.53)]),
+   (fit('b2',D+'/t2.wav',0.0,0.90,3.19,3.79,'h'),[('又來了。',3.19)]),
+   (fit('b3',D+'/m4.wav',0.0,3.10,4.71,6.61,'x'),[('護照……也在裡面啦……',4.71)]),
+   (fit('b4',D+'/t3.wav',0.0,5.24,7.40,12.60,'h'),[('先去派出所拿遺失證明，',7.40),('有保不便險的話，',9.6),('補辦費用可以申請。',11.0)])]
 def scene(n,video,lines,D_,tag=None):
     place=[c for c,_ in lines];subs=[s for _,sb in lines for s in sb]
     inp=['-t',str(D_),'-i',video];fc=f'[0:v]scale=720:1280,fps=24,setsar=1,tpad=stop_mode=clone:stop_duration=1,trim=0:{D_},setpts=PTS-STARTPTS[v1]';last='v1';ii=1
@@ -86,11 +86,11 @@ run(['-i',T+'/o1.mp4','-i',T+'/o2.mp4','-i',T+'/otitle.png','-f','lavfi','-t',st
      f"[0:v][1:v]xfade=transition=fade:duration=0.5:offset=2.1[x];[x][2:v]overlay=0:0:enable='gte(t,2.3)'[v];[3:a]aformat=channel_layouts=stereo,highpass=f=120,lowpass=f=900,tremolo=f=0.15:d=0.6,afade=t=in:d=0.6[a]",
      '-map','[v]','-map','[a]','-t',str(OD),'-c:v','libx264','-crf','18','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-ar','48000','-ac','2',T+'/q0.mp4'])
 qA=scene('A',D+'/A.mp4',A,12.3,tag=T+'/tag.png')
-qB=scene('B',D+'/B.mp4',B,12.6)
+qB=scene('B',D+'/B.mp4',B,13.1)
 run(['-loop','1','-t','3.5','-i',T+'/end.png','-f','lavfi','-t','3.5','-i','anullsrc=r=48000:cl=stereo','-vf','fps=24,format=yuv420p,fade=t=in:d=0.4','-c:v','libx264','-crf','18','-c:a','aac','-b:a','192k','-ar','48000','-ac','2','-shortest',T+'/pend.mp4'])
 open(T+'/list.txt','w').write(''.join(f"file '{p}'\n" for p in [T+'/q0.mp4',qA,qB,T+'/pend.mp4']))
 run(['-f','concat','-safe','0','-i',T+'/list.txt','-c','copy',T+'/nomusic.mp4'])
-Dt=dur(T+'/nomusic.mp4');a0=OD;a1=OD+12.3+12.6
+Dt=dur(T+'/nomusic.mp4');a0=OD;a1=OD+12.3+13.1
 vol=f"if(lt(t,{a0}),1.3,if(lt(t,{a1}),0.2,1.0))"
-run(['-i',T+'/nomusic.mp4','-ss','10','-i','/home/claude/vid/vlog1/bgm/jp_366769.mp3','-filter_complex',f"[0:a]volume=2.2[d];[1:a]atrim=0:{Dt},asetpts=PTS-STARTPTS,aresample=48000,volume='{vol}':eval=frame,afade=t=in:d=0.8,afade=t=out:st={Dt-1.5}:d=1.5[m];[d][m]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.85:level=0[a]",'-map','0:v','-map','[a]','-t',str(Dt),'-c:v','libx264','-crf','21','-preset','medium','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-movflags','+faststart',D+'/VLOG2_京都_v3.mp4'])
+run(['-i',T+'/nomusic.mp4','-ss','10','-i','/home/claude/vid/vlog1/bgm/jp_366769.mp3','-filter_complex',f"[0:a]volume=2.2[d];[1:a]atrim=0:{Dt},asetpts=PTS-STARTPTS,aresample=48000,volume='{vol}':eval=frame,afade=t=in:d=0.8,afade=t=out:st={Dt-1.5}:d=1.5[m];[d][m]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.85:level=0[a]",'-map','0:v','-map','[a]','-t',str(Dt),'-c:v','libx264','-crf','21','-preset','medium','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-movflags','+faststart',D+'/VLOG2_京都_v6.mp4'])
 print('ok',Dt)
