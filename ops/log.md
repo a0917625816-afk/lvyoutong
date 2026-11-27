@@ -35,3 +35,5 @@
 | 2026-11-26 | 互動 | IG 留言 3 則：sisi.traveller 日本自由行必做 DVYWPysEg3k、3_1_1_ 福岡便宜機票 DX6y-06P-m2、_cindy1021 班機取消 De0wzr8TPr6；脆回 1 則 @nightnote.v_ 韓國滑雪保險提問 | 無連結 |
 | 2026-11-27 | — | Day12：19:00 電腦離線；19:47 老闆開機後開工 vlog EP2 京都 | v6 交老闆待 OK |
 | 2026-11-27 | 互動 | IG 留言 3 則：samanthalin__ 京都一日行程 DdBpNSmSman、yyvesl 日本退稅新制 DfrgMZiTDCq、kenjiwang5427 釜山護照遺失 DMPqiIxSCF_；脆回 1 則 @yangshuan2 京瓷演唱會趕末班車 | 無連結 |
+| 2026-11-27 | IG Reels | vlog EP2〈雪寶虎寶出國玩：京都〉v6（老闆 OK）https://www.instagram.com/lvyoutong_tw/reel/DgP0i7by-h4/ | AI 標籤 |
+| 2026-11-27 | Threads | 同一支京都 vlog＋短文（主題：旅遊） | |
