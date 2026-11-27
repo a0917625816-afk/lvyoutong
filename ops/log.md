@@ -33,4 +33,5 @@
 | 2026-11-25 | 互動 | IG 留言 3 則：yaoa2715312 北海道租車 Dfb6X0GIdQU（雪地取車提醒）、foodie____aii 白川鄉 DcXkbGjPRxV（防滑提醒）、wangwang_naa 東京跨年 DS9vG9hk4RK（初詣）；脆回 1 則 @as0075 北海道雪地自駕問題 | 無連結 |
 | 2026-11-26 | IG＋Threads | 雜誌封面 No.13 旅平險幾天前要保 https://www.instagram.com/lvyoutong_tw/p/DgM9ObmGPIJ/ | AI 標籤、同步脆 |
 | 2026-11-26 | 互動 | IG 留言 3 則：sisi.traveller 日本自由行必做 DVYWPysEg3k、3_1_1_ 福岡便宜機票 DX6y-06P-m2、_cindy1021 班機取消 De0wzr8TPr6；脆回 1 則 @nightnote.v_ 韓國滑雪保險提問 | 無連結 |
-| 2026-11-27 | — | Day12：電腦離線，vlog EP2 未開工 | 21:00 重試 |
+| 2026-11-27 | — | Day12：19:00 電腦離線；19:47 老闆開機後開工 vlog EP2 京都 | v6 交老闆待 OK |
+| 2026-11-27 | 互動 | IG 留言 3 則：samanthalin__ 京都一日行程 DdBpNSmSman、yyvesl 日本退稅新制 DfrgMZiTDCq、kenjiwang5427 釜山護照遺失 DMPqiIxSCF_；脆回 1 則 @yangshuan2 京瓷演唱會趕末班車 | 無連結 |
