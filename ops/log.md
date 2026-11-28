@@ -37,3 +37,5 @@
 | 2026-11-27 | 互動 | IG 留言 3 則：samanthalin__ 京都一日行程 DdBpNSmSman、yyvesl 日本退稅新制 DfrgMZiTDCq、kenjiwang5427 釜山護照遺失 DMPqiIxSCF_；脆回 1 則 @yangshuan2 京瓷演唱會趕末班車 | 無連結 |
 | 2026-11-27 | IG Reels | vlog EP2〈雪寶虎寶出國玩：京都〉v6（老闆 OK）https://www.instagram.com/lvyoutong_tw/reel/DgP0i7by-h4/ | AI 標籤 |
 | 2026-11-27 | Threads | 同一支京都 vlog＋短文（主題：旅遊） | |
+| 2026-11-28 | IG＋Threads | 雜誌封面 No.14 https://www.instagram.com/lvyoutong_tw/p/DgSGxxaGH_8/ | AI 標籤、同步脆；新一排第 1 張圖 |
+| 2026-11-28 | 互動 | IG 留言 3 則：duck_the_dachshund DZe-gn8ydAz、miller_travelgo 沖繩交通 DbQjlkWTN9q（租車免責＋NOC）、hangul.highway.tw 韓國市場點餐 DdGyTqBGUtr（藥局韓語）；脆回 1 則 @be_happy2614 出遊前小孩生病都市傳說（備藥、留收據診斷書） | 無連結 |
